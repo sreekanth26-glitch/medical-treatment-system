@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medical Treatment System</title>
+
+    <style>
+        /* ===== GENERAL STYLING ===== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f9ff;
+            color: #263746;
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+
+        header {
+            background: linear-gradient(135deg, #075985, #0f766e);
+            color: white;
+            text-align: center;
+            padding: 28px 15px;
+            box-shadow: 0 4px 15px rgba(15, 118, 110, 0.15);
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(25px, 4vw, 36px);
+        }
+
+        header p {
+            margin: 0;
+            color: #e0f2fe;
+            font-size: 15px;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+
+        main {
+            max-width: 1150px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* ===== WELCOME BANNER ===== */
+
+        .welcome-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            min-height: 350px;
+            margin-bottom: 35px;
+            padding: 40px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #d0eeeb;
+            border-radius: 24px;
+            background: linear-gradient(120deg, #e0f2fe, #ccfbf1);
+            box-shadow: 0 8px 25px rgba(15, 118, 110, 0.08);
+        }
+
+        .welcome-text {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-badge {
+            display: inline-block;
+            padding: 8px 13px;
+            border-radius: 25px;
+            background: white;
+            color: #0f766e;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .welcome-text h2 {
+            margin: 22px 0 15px;
+            color: #164e63;
+            font-size: clamp(28px, 3.5vw, 42px);
+            line-height: 1.25;
+        }
+
+        .welcome-text h2 span {
+            display: block;
+            color: #0f766e;
+        }
+
+        .welcome-text p {
+            max-width: 540px;
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .explore-button {
+            margin: 18px 0 0;
+            padding: 14px 23px;
+            border: none;
+            border-radius: 10px;
+            background: #0f766e;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .explore-button:hover {
+            background: #115e59;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .welcome-note {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 23px;
+            color: #155e63;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* ===== MEDICAL ILLUSTRATION ===== */
+
+        .welcome-illustration {
+            flex: 0 0 200px;
+            height: 200px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .medical-symbol {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(15, 118, 110, 0.15);
+            color: #0f766e;
+            font-size: 100px;
+            font-weight: bold;
+            line-height: 1;
+            box-shadow: 0 15px 35px rgba(15, 118, 110, 0.12);
+        }
+
+        .heart-symbol {
+            position: absolute;
+            right: 0;
+            bottom: 8px;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #0f766e;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(15, 118, 110, 0.2);
+        }
+
+        .circle-decoration {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #67e8f9;
+            opacity: 0.8;
+        }
+
+        /* ===== SEARCH SECTION ===== */
+
+        .section-heading {
+            margin: 15px 0 5px;
+            color: #164e63;
+            font-size: 26px;
+        }
+
+        .section-description {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #64748b;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 18px;
+            margin: 12px 0 20px;
+            border: 1px solid #cbdde8;
+            border-radius: 12px;
+            background: white;
+            color: #1e293b;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: #0d9488;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
+        }
+
+        /* ===== CATEGORY FILTERS ===== */
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        button {
+            padding: 11px 17px;
+            border: none;
+            border-radius: 9px;
+            background: #d9eeee;
+            color: #075b65;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover,
+        button.active {
+            background: #0f766e;
+            color: white;
+        }
+
+        .categories button {
+            padding: 10px 18px;
+            border: 1px solid #cce7e5;
+            border-radius: 25px;
+            background: white;
+            color: #0f766e;
+            font-weight: 600;
+        }
+
+        .categories button:hover,
+        .categories button.active {
+            background: #0f766e;
+            color: white;
+            border-color: #0f766e;
+            transform: translateY(-1px);
+        }
+
+        /* ===== DISEASE LIST ===== */
+
+        #categoryTitle {
+            color: #164e63;
+            margin-bottom: 18px;
+            font-size: 24px;
+        }
+
+        .disease-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 22px;
+        }
+
+        /* ===== DISEASE CARDS ===== */
+
+        .card {
+            background: white;
+            padding: 25px;
+            border: 1px solid #e0efef;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
+            transition: transform 0.25s ease,
+                        box-shadow 0.25s ease,
+                        border-color 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 30px rgba(15, 118, 110, 0.12);
+            border-color: #a7e2dc;
+        }
+
+        .card h3 {
+            color: #0f766e;
+            font-size: 20px;
+            margin: 0 0 10px;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .card button {
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            color: white;
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 12px 0 0;
+        }
+
+        .card button:hover {
+            background: linear-gradient(135deg, #115e59, #0e7490);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ===== DISEASE DETAILS ===== */
+
+        .details {
+            margin-top: 25px;
+            padding: clamp(22px, 4vw, 38px);
+            background: white;
+            border: 1px solid #e0efef;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .details h2 {
+            color: #0f766e;
+            font-size: 28px;
+            margin-top: 18px;
+        }
+
+        .details h3 {
+            color: #155e75;
+            border-bottom: 2px solid #d9f0ee;
+            padding-bottom: 9px;
+            margin-top: 28px;
+        }
+
+        .details p,
+        .details li {
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .details li {
+            margin-bottom: 8px;
+        }
+
+        .back {
+            background: #1e293b;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .back:hover {
+            background: #334155;
+            color: white;
+        }
+
+        /* ===== UTILITIES ===== */
+
+        .hidden {
+            display: none !important;
+        }
+
+        button:focus-visible {
+            outline: 3px solid #38bdf8;
+            outline-offset: 3px;
+        }
+
+        /* ===== FOOTER ===== */
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: 40px;
+            background: #eaf5f5;
+            color: #64748b;
+            font-size: 14px;
+            border-top: 1px solid #d9e9e9;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* ===== MOBILE RESPONSIVENESS ===== */
+
+        @media (max-width: 650px) {
+            header {
+                padding: 24px 15px;
+            }
+
+            main {
+                margin: 15px auto;
+                padding: 14px;
+            }
+
+            .welcome-banner {
+                min-height: auto;
+                padding: 28px 22px;
+            }
+
+            .welcome-illustration {
+                display: none;
+            }
+
+            .welcome-text h2 {
+                font-size: 29px;
+            }
+
+            .welcome-text p {
+                font-size: 14px;
+            }
+
+            .welcome-note {
+                gap: 10px;
+            }
+
+            .disease-list {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .categories {
+                gap: 7px;
+            }
+
+            .categories button {
+                padding: 9px 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== WEBSITE HEADER ===== -->
+
+    <header>
+        <h1>Medical Treatment System</h1>
+        <p>Explore diseases, symptoms and health information</p>
+    </header>
+
+    <main>
+
+        <!-- ===== HOME PAGE ===== -->
+
+        <section id="home">
+
+            <!-- Welcome Banner -->
+
+            <section class="welcome-banner">
+
+                <div class="welcome-text">
+
+                    <span class="welcome-badge">
+                        ✚ YOUR HEALTH, OUR PRIORITY
+                    </span>
+
+                    <h2>
+                        Welcome to 
+                        <span>Medical Treatment System</span>
+                    </h2>
+
+                    <p>
+                        Understand your health better. Explore diseases,
+                        learn about symptoms, and discover treatment
+                        information in one convenient place.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="explore-button"
+                        onclick="document.getElementById('search').focus(); document.getElementById('search').scrollIntoView({behavior:'smooth', block:'center'});">
+                        Explore Diseases &rarr;
+                    </button>
+
+                    <div class="welcome-note">
+                        <span>15 Health Conditions</span>
+                        <span>3 Health Categories</span>
+                    </div>
+
+                </div>
+
+                <div class="welcome-illustration" aria-hidden="true">
+
+                    <div class="medical-symbol">+</div>
+
+                    <div class="heart-symbol">♥</div>
+
+                    <div class="circle-decoration"></div>
+
+                </div>
+
+            </section>
+
+            <!-- Search Section -->
+
+            <h2 class="section-heading">Find Health Information</h2>
+
+            <p class="section-description">
+                Select a category or search for a disease.
+            </p>
+
+            <input
+                id="search"
+                type="text"
+                placeholder="Search diseases..."
+                aria-label="Search diseases"
+                oninput="showDiseases()">
+
+            <!-- Category Filters -->
+
+            <div class="categories">
+
+                <button
+                    type="button"
+                    class="active"
+                    onclick="filterCategory('All', this)">
+                    All Diseases
+                </button>
+
+                <button
+                    type="button"
+                    onclick="filterCategory('Boys', this)">
+                    Boys' Health
+                </button>
+
+                <button
+                    type="button"
+                    onclick="filterCategory('Girls', this)">
+                    Girls' Health
+                </button>
+
+                <button
+                    type="button"
+                    onclick="filterCategory('Common', this)">
+                    Common Diseases
+                </button>
+
+            </div>
+
+            <h2 id="categoryTitle">All Diseases</h2>
+
+            <div id="diseaseList" class="disease-list"></div>
+
+        </section>
+
+        <!-- ===== DISEASE DETAILS PAGE ===== -->
+
+        <section id="details" class="details hidden">
+
+            <button
+                type="button"
+                class="back"
+                onclick="goBack()">
+                &larr; Back to Diseases
+            </button>
+
+            <h2 id="diseaseName"></h2>
+
+            <p id="description"></p>
+
+            <h3>1. Symptoms</h3>
+            <ul id="symptoms"></ul>
+
+            <h3>2. General Treatment</h3>
+            <ul id="treatment"></ul>
+
+            <h3>3. Medicine Information</h3>
+            <ul id="medicine"></ul>
+
+            <h3>4. Precautions</h3>
+            <ul id="precautions"></ul>
+
+            <h3>5. When to Seek Medical Help</h3>
+            <ul id="warning"></ul>
+
+            <p>
+                <strong>Disclaimer:</strong>
+                This website provides educational information only.
+                Symptoms can have different causes. Consult a qualified
+                healthcare professional for diagnosis and treatment.
+                Do not start prescription medicines yourself.
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+
+    <footer>
+        <p>Medical Treatment System | Health Education Project</p>
+    </footer>
+
+    <script>
+        // ===== DISEASE DATA FROM FLASK =====
+
+        const diseases = {{ diseases | tojson }};
+
+        let selectedCategory = "All";
+
+        // ===== CATEGORY FILTER =====
+
+        function filterCategory(category, button) {
+            selectedCategory = category;
+
+            document.querySelectorAll(".categories button")
+                .forEach(btn => btn.classList.remove("active"));
+
+            button.classList.add("active");
+
+            document.getElementById("categoryTitle").textContent =
+                category === "All" ? "All Diseases" :
+                category === "Boys" ? "Boys' Health" :
+                category === "Girls" ? "Girls' Health" :
+                "Common Diseases";
+
+            showDiseases();
+        }
+
+        // ===== DISPLAY DISEASE CARDS =====
+
+        function showDiseases() {
+            const search = document
+                .getElementById("search")
+                .value
+                .toLowerCase()
+                .trim();
+
+            const filtered = diseases.filter(disease =>
+                (selectedCategory === "All" ||
+                    disease.category === selectedCategory) &&
+                disease.name.toLowerCase().includes(search)
+            );
+
+            const list = document.getElementById("diseaseList");
+
+            list.innerHTML = "";
+
+            if (filtered.length === 0) {
+                list.textContent = "No matching diseases found.";
+                return;
+            }
+
+            filtered.forEach(disease => {
+                const card = document.createElement("div");
+
+                card.className = "card";
+
+                const title = document.createElement("h3");
+
+                title.textContent = disease.name;
+
+                const category = document.createElement("p");
+
+                category.textContent =
+                    disease.category + " Health";
+
+                const button = document.createElement("button");
+
+                button.type = "button";
+                button.textContent = "View Details";
+                button.setAttribute(
+                    "aria-label",
+                    "View details for " + disease.name
+                );
+
+                button.onclick = () => viewDisease(disease);
+
+                card.append(title, category, button);
+
+                list.appendChild(card);
+            });
+        }
+
+        // ===== DISPLAY LIST INFORMATION =====
+
+        function addList(id, items) {
+            const ul = document.getElementById(id);
+
+            if (!ul) {
+                console.warn("HTML element not found:", id);
+                return;
+            }
+
+            ul.innerHTML = "";
+
+            if (!items || items.length === 0) {
+                const li = document.createElement("li");
+
+                li.textContent = "Information not available.";
+
+                ul.appendChild(li);
+
+                return;
+            }
+
+            items.forEach(item => {
+                const li = document.createElement("li");
+
+                li.textContent = item;
+
+                ul.appendChild(li);
+            });
+        }
+
+        // ===== OPEN DISEASE DETAILS =====
+
+        function viewDisease(disease) {
+            document.getElementById("home")
+                .classList.add("hidden");
+
+            document.getElementById("details")
+                .classList.remove("hidden");
+
+            document.getElementById("diseaseName")
+                .textContent = disease.name;
+
+            document.getElementById("description")
+                .textContent =
+                    disease.definition || "Information not available.";
+
+            addList("symptoms", disease.symptoms || []);
+
+            addList("treatment", disease.treatment_types || []);
+
+            addList("medicine", disease.medicines || []);
+
+            addList("precautions", disease.precautions || []);
+
+            addList("warning", disease.warning || [
+                "Consult a qualified healthcare professional for advice."
+            ]);
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        // ===== RETURN TO HOME PAGE =====
+
+        function goBack() {
+            document.getElementById("details")
+                .classList.add("hidden");
+
+            document.getElementById("home")
+                .classList.remove("hidden");
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        // ===== INITIALIZE WEBSITE =====
+
+        showDiseases();
+    </script>
+
+</body>
+</html>
